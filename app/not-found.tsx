@@ -1,0 +1,1 @@
+export default function NotFound() { return <main className="shell not-found"><div className="eyebrow">404</div><h1>Clinic not found</h1><p>This clinic may no longer be part of the DentalBookings network.</p><a className="button-link" href="/">Back to clinic search</a></main>; }
