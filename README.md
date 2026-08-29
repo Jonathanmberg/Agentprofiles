@@ -20,7 +20,7 @@ Tools are registered by `components/webmcp-tools.tsx` at component mount, use na
 
 1. Create a Supabase project and copy `.env.example` to `.env.local`.
 2. Add the Project URL, anon key, and service-role key. Never expose the service-role key to the browser.
-3. Run `supabase db push` (or execute `supabase/migrations/20260829000000_dentalbookings.sql` in the SQL editor).
+3. Run `supabase db push`, then execute `supabase/seed.example.sql` in the Supabase SQL editor.
 4. Install and run:
 
 ```bash
@@ -28,7 +28,7 @@ npm install
 npm run dev
 ```
 
-This public release intentionally excludes the live demo dataset. Apply the migrations, then use `supabase/seed.example.sql` as the starting point for your own fictional businesses, providers, and slots.
+This release includes a fully fictional, runnable public seed dataset. It is deliberately different from the live demonstration data and contains no real people or customer records.
 
 ## Test the agent flow
 
