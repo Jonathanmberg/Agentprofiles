@@ -1,0 +1,13 @@
+"use client";
+
+import { useState } from "react";
+import { AgentActivityPanel } from "@/components/agent-activity";
+import type { Clinic } from "@/lib/types";
+
+export function HomePage({ initialClinics }: { initialClinics: Clinic[] }) {
+  const [city, setCity] = useState(""); const [clinics, setClinics] = useState(initialClinics); const [loading, setLoading] = useState(false);
+  async function search(event: React.FormEvent) { event.preventDefault(); if (!city.trim()) { setClinics(initialClinics); return; } setLoading(true); const response = await fetch(`/api/clinics?city=${encodeURIComponent(city)}`); const data = await response.json(); setClinics(data.clinics ?? []); setLoading(false); }
+  return <main><section className="hero"><nav className="nav shell"><a className="brand" href="/"><span>✦</span> AgentProfiles</a><div className="trust-pill">THE PROFILE-AWARE WEB</div></nav><div className="hero-content shell"><div><div className="eyebrow light">A USER-CONTROLLED CONTEXT LAYER FOR AGENTS</div><h1>Your life, understood.<br /><em>Actions, completed.</em></h1><p>AgentProfiles is a first look at a web where trusted services understand the preferences you choose to share. Our first proof: booking dental care without starting from zero.</p><form className="search-form" onSubmit={search}><input aria-label="Search DentalBookings by city" value={city} onChange={(event) => setCity(event.target.value)} placeholder="Try Oslo, Bergen or Trondheim" /><button>{loading ? "Searching…" : "Explore DentalBookings"}</button></form><div className="agent-prompt"><span>✦</span><p><strong>First profile-aware service: DentalBookings.</strong> “Book my usual dentist next week, preferably after 14:00. Compare alternatives before I confirm.”</p></div></div><div className="hero-orb"><div className="orb-inner">✓<small>Context with<br />consent</small></div></div></div></section>
+    <section className="shell page-grid clinic-list-section"><div><div className="section-heading"><div><div className="eyebrow">DENTALBOOKINGS · FIRST LIVE DEMO</div><h2>Care that remembers your preferences</h2></div><span className="slot-count">{clinics.length} clinics</span></div><div className="clinic-cards">{clinics.map((clinic, index) => <a className="clinic-card" href={`/clinics/${clinic.id}`} key={clinic.id}><div className={`clinic-art art-${index % 3}`}><span>{clinic.name.slice(0, 1)}</span></div><div><div className="eyebrow">{clinic.city.toUpperCase()}</div><h3>{clinic.name}</h3><p>{clinic.address}</p><p>{clinic.phone}</p><b>View availability →</b></div></a>)}{clinics.length === 0 && <div className="empty-state">No clinics match that city. Try Oslo, Bergen, or Trondheim.</div>}</div></div><AgentActivityPanel /></section>
+  </main>;
+}
